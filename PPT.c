@@ -26,20 +26,13 @@ unsigned short head = 0;
 
 unsigned short count = 0;
 
-void enqueue(number_t item)
-{
-    queue[tail++] = item;
-    // tail = (tail + 1) & MAX_QUEUE;
-}
 
+#define enqueue(item) \
+	queue[tail++] = (item)
 
-number_t dequeue(void)
-{
-    // number_t res = queue[head];
-    // head = (head + 1) & MAX_QUEUE;
-    // return res;
-	return queue[head++];
-}
+#define dequeue() \
+	queue[head++]
+	
 
 void display_triples(number_t start_index, number_t end_index)
 {
@@ -75,15 +68,12 @@ tc = 3*c;
 // c1 = -da+b+tc; c2 = da-b+tc; c3 = c2+db;
 
 a1 = a-db+dc; a2 = a+db+dc; a3 = a2-da;
-
 b1 = da-b+dc; b2 = b1+db; b3 = -da+b+dc;
-
 c1 = da-db+tc; c2 = da+db+tc; c3 = -da+db+tc;
 
 enqueue(a1); enqueue(b1); enqueue(c1);
 enqueue(a2); enqueue(b2); enqueue(c2);
 enqueue(a3); enqueue(b3); enqueue(c3);
-
 }
 
 int main(void)
@@ -96,7 +86,7 @@ int main(void)
     enqueue(4);
     enqueue(5);
     count = 1;
-    printf("Press a key to start\n");
+    printf("Press enter to start\n");
     getchar();
     printf("Computing...\n");
     
@@ -114,7 +104,7 @@ int main(void)
     printf ("Time used: %u.%03u seconds\n", Sec, Milli);
     
     
-    printf("Press a key to print the triples\n");
+    printf("Press enter to print the triples\n");
     getchar();
     display_triples(DISPLAY_START,TARGET);
     return 0;
