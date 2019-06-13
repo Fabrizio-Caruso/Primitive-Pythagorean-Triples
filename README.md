@@ -5,8 +5,8 @@ by Fabrizio Caruso
 
 
 This is a simple code that enumerates all primitive Pythagorean triples by using Barning's theorem.
-The triples are enumarate in breadth-first order.
-The code can be built by any standard ANSI-complyant compiler such as GCC and CC65 (for the 6502 architecture).
+The triples are enumerated in breadth-first order.
+The code can be built by any standard ANSI-compliant compiler such as GCC and CC65 (for the 6502 architecture).
 
 ## Compilation
 
@@ -20,7 +20,7 @@ For example:
 
 ### Use directly a compiler and pass the parameters to customize the computation and display
 
-Use your prefered C compiler for your target architecture and pass the following parameters:
+Use your preferred C compiler for your target architecture and pass the following parameters:
 1. **-DUSE_SHORT** to force unsigned short computation (faster but at the risk of overflow) 
 2. **-DTARGET=1000** to set the number of triples to compute
 3. **-DDISPLAY_START=981** to set the initial triple to display
