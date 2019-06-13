@@ -53,6 +53,7 @@ number_t a1,b1,c1;
 number_t a2,b2,c2;
 number_t a3,b3,c3;
 number_t da, db, dc, tc;
+number_t s;
 
 a = dequeue();
 b = dequeue();
@@ -62,6 +63,7 @@ da = a<<1;
 db = b<<1;
 dc = c<<1;
 tc = dc+c;
+s = db+tc;
 
 // Alternative
 // a1 = da+b-c; a2 = a1+dc; a3 = a2-db;
@@ -70,7 +72,7 @@ tc = dc+c;
 
 a1 = a-db+dc; a2 = a+db+dc; a3 = a2-da;
 b1 = da-b+dc; b2 = b1+db; b3 = -da+b+dc;
-c1 = da-db+tc; c2 = da+db+tc; c3 = -da+db+tc;
+c1 = da-db+tc; c2 = da+s; c3 = -da+s;
 
 enqueue(a1); enqueue(b1); enqueue(c1);
 enqueue(a2); enqueue(b2); enqueue(c2);
