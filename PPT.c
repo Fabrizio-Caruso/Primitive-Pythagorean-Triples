@@ -80,8 +80,8 @@ enqueue(a3); enqueue(b3); enqueue(c3);
 int main(void)
 {
     clock_t Ticks;
-    unsigned Sec;
-    unsigned Milli;
+    unsigned int Sec;
+    unsigned int Milli;
     
     enqueue(3);
     enqueue(4);
