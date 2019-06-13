@@ -60,7 +60,7 @@ c = dequeue();
 da = a<<1;
 db = b<<1;
 dc = c<<1;
-tc = 3*c;
+tc = dc+c;
 
 // Alternative
 // a1 = da+b-c; a2 = a1+dc; a3 = a2-db;
