@@ -38,6 +38,7 @@ void display_triples(number_t start_index, number_t end_index)
 {
     unsigned short i;
     
+	printf("\n");
     for(i=start_index-1;i<end_index;++i)
     {
         printf(DISPLAY_STRING, i+1, queue[3*i], queue[3*i+1],queue[3*i+2]);
@@ -88,7 +89,7 @@ int main(void)
     count = 1;
     printf("Press enter to start\n");
     getchar();
-    printf("Computing...\n");
+    printf("\nComputing...\n");
     
     Ticks = clock();
 
