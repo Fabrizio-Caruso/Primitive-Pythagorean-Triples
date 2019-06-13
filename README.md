@@ -1,6 +1,9 @@
 # Primitive-Pythagorean-Triples
 Primitive Pythagorean Triples
 
+by Fabrizio Caruso
+
+
 This is a simple code that enumerates all primitive Pythagorean triples by using Barning's theorem.
 The triples are enumarate in breadth-first order.
 The code can be built by any standard ANSI-complyant compiler such as GCC and CC65 (for the 6502 architecture).
@@ -8,11 +11,11 @@ The code can be built by any standard ANSI-complyant compiler such as GCC and CC
 ## Compilation
 
 ### Use the Makefile targets.
-For example use
-**make all** produce versions that use unsigned short, unsigned long numbers for both the PC and the Commodore 64.
-See Makefile for other targets
+For example: use
+**make all** to produce binary versions that use unsigned short, unsigned long numbers for both the PC and the Commodore 64.
+Inspect the Makefile file to see the provided specific targets.
 
-### Use the compiler and pass the parameters
+### Use directly a compiler and pass the parameters to customize the computation and display
 
 Use your prefered C compiler for your target architecture and pass the following parameters:
 1. **-DUSE_SHORT** to force unsigned short computation (faster but at the risk of overflow) 
