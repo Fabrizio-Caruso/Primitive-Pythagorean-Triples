@@ -19,9 +19,6 @@ typedef unsigned long number_t;
 #define DISPLAY_STRING "%u: %lu %lu %lu\n"
 #endif
 
-#define CEILING(x,y) (((x) + (y) - 1) / (y))
-#define LOOPS CEILING(TARGET-1,3)
-
 number_t queue[MAX_QUEUE];
 
 unsigned short tail = 0;
@@ -49,15 +46,15 @@ void display_triples(number_t start_index, number_t end_index)
     printf("\n");
 }
 
-
-void compute_new_triples(void)
+void compute_new_triplets(void)
 {
 	number_t a,b,c;
-	number_t a1,b1;
-	number_t a2;
+	number_t a1,b1,c1;
+	number_t a2,b2,c2;
+	number_t a3,b3,c3;
 	number_t da, db, dc, tc;
-	number_t s;	
-	
+	number_t s;
+
 	a = dequeue();
 	b = dequeue();
 	c = dequeue();
@@ -69,22 +66,25 @@ void compute_new_triples(void)
 	s = db+tc;
 
 	a1 = a-db+dc; 
-	a2 = a1 + (db<<1);	
+	#if defined(USE_SHORT)
+	a2 = a+db+dc;
+	#else
+	a2 = a1 + (db<<1); 
+	#endif
+	a3 = a2-da;
 	b1 = da-b+dc; 
-	
-	enqueue(a1); // a1
-	enqueue(b1); // b1
-	enqueue(da-db+tc); // c1
-	
-	enqueue(a2); // a2
-	enqueue(b1+db); // b2
-	enqueue(da+s); // c2
-	
-	enqueue(a2-da); // a3
-	enqueue((dc<<1)-b1); // b3
-	enqueue(s-da); // c3	
-}
+	b2 = b1+db; 
+	#if defined(USE_SHORT)
+	b3 = b-da+dc;
+	#else
+	b3 = (dc<<1)-b1;
+	#endif
+	c1 = da-db+tc; c2 = da+s; c3 = -da+s;
 
+	enqueue(a1); enqueue(b1); enqueue(c1);
+	enqueue(a2); enqueue(b2); enqueue(c2);
+	enqueue(a3); enqueue(b3); enqueue(c3);
+}
 
 int main(void)
 {
@@ -95,22 +95,24 @@ int main(void)
     enqueue(3);
     enqueue(4);
     enqueue(5);
-    count = 0;
+    count = 1;
     printf("Press enter to start\n");
     getchar();
     printf("\nComputing...\n");
     
     Ticks = clock();
 
-    while(++count<=LOOPS)
+    while(count<TARGET)
     {
-		compute_new_triples();
+        compute_new_triplets();
+        count+=3;
     }
-
+    
     Ticks = clock() - Ticks;
     Sec = (unsigned) (Ticks / CLOCKS_PER_SEC);
     Milli = ((Ticks % CLOCKS_PER_SEC) * 1000) / CLOCKS_PER_SEC;
-    printf ("Time used: %u.%03u seconds\n", Sec, Milli);    
+    printf ("Time used: %u.%03u seconds\n", Sec, Milli);
+    
     
     printf("Press enter to print the triples\n");
     getchar();
