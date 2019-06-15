@@ -21,17 +21,28 @@ typedef unsigned long number_t;
 
 number_t queue[MAX_QUEUE];
 
-unsigned short tail = 0;
-unsigned short head = 0;
 
-unsigned short count = 0;
+#if defined(EXTERN_VARS)
+	#include "extern_short_vars.h"
+#else
+	unsigned short count = 0;
+	number_t *tail;
+	number_t *head;
+
+	number_t a,b,c;
+	number_t a1,b1,c1;
+	number_t a2;
+	number_t a3,b3,c3;
+	number_t da, db, dc, tc;
+	number_t s;	
+#endif
 
 
 #define enqueue(item) \
-queue[tail++] = (item)
+	*(tail++) = (number_t)(item)
 
 #define dequeue() \
-queue[head++]
+	(number_t) *(head++)
 
 
 void display_triples(number_t start_index, number_t end_index)
@@ -48,13 +59,6 @@ void display_triples(number_t start_index, number_t end_index)
 
 void compute_new_triplets(void)
 {
-	number_t a,b,c;
-	number_t a1,b1,c1;
-	number_t a2,b2,c2;
-	number_t a3,b3,c3;
-	number_t da, db, dc, tc;
-	number_t s;
-
 	a = dequeue();
 	b = dequeue();
 	c = dequeue();
@@ -66,32 +70,26 @@ void compute_new_triplets(void)
 	s = db+tc;
 
 	a1 = a-db+dc; 
-	#if defined(USE_SHORT)
 	a2 = a+db+dc;
-	#else
-	a2 = a1 + (db<<1); 
-	#endif
 	a3 = a2-da;
-	b1 = da-b+dc; 
-	b2 = b1+db; 
-	#if defined(USE_SHORT)
-	b3 = b-da+dc;
-	#else
+	b1 = da+dc-b; 
 	b3 = (dc<<1)-b1;
-	#endif
-	c1 = da-db+tc; c2 = da+s; c3 = -da+s;
+	c1 = da+tc-db;
+	c3 = s-da;
 
 	enqueue(a1); enqueue(b1); enqueue(c1);
-	enqueue(a2); enqueue(b2); enqueue(c2);
+	enqueue(a2); enqueue(b1+db); enqueue(da+s);
 	enqueue(a3); enqueue(b3); enqueue(c3);
 }
 
 int main(void)
 {
-    clock_t Ticks;
+    clock_t Ticks, TicksDelta;
     unsigned int Sec;
     unsigned int Milli;
-    
+
+	head = tail = queue;
+	    
     enqueue(3);
     enqueue(4);
     enqueue(5);
@@ -108,10 +106,10 @@ int main(void)
         count+=3;
     }
     
-    Ticks = clock() - Ticks;
-    Sec = (unsigned) (Ticks / CLOCKS_PER_SEC);
-    Milli = ((Ticks % CLOCKS_PER_SEC) * 1000) / CLOCKS_PER_SEC;
-    printf ("Time used: %u.%03u seconds\n", Sec, Milli);
+    TicksDelta = clock() - Ticks;
+    Sec = (unsigned short) (TicksDelta / CLOCKS_PER_SEC);
+    Milli = ((TicksDelta % CLOCKS_PER_SEC) * 1000) / CLOCKS_PER_SEC;
+    printf ("Time used: %u.%03u seconds = %u ticks\n", Sec, Milli, (unsigned short) TicksDelta); 
     
     
     printf("Press enter to print the triples\n");

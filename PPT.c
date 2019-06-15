@@ -24,17 +24,27 @@ typedef unsigned long number_t;
 
 number_t queue[MAX_QUEUE];
 
-unsigned short tail = 0;
-unsigned short head = 0;
+#if defined(EXTERN_VARS)
+	#include "extern_long_vars.h"
+#else
+	unsigned short count = 0;
+	number_t *tail;
+	number_t *head;
 
-unsigned short count = 0;
+	number_t a,b,c;
+	number_t a1,b1;
+	number_t a2;
+	number_t da, db, dc, tc;
+	number_t s;	
+#endif
+
 
 
 #define enqueue(item) \
-queue[tail++] = (item)
+	*(tail++) = (number_t)(item)
 
 #define dequeue() \
-queue[head++]
+	(number_t) *(head++)
 
 
 void display_triples(number_t start_index, number_t end_index)
@@ -52,12 +62,6 @@ void display_triples(number_t start_index, number_t end_index)
 
 void compute_new_triples(void)
 {
-	number_t a,b,c;
-	number_t a1,b1;
-	number_t a2;
-	number_t da, db, dc, tc;
-	number_t s;	
-	
 	a = dequeue();
 	b = dequeue();
 	c = dequeue();
@@ -74,7 +78,7 @@ void compute_new_triples(void)
 	
 	enqueue(a1); // a1
 	enqueue(b1); // b1
-	enqueue(da-db+tc); // c1
+	enqueue(da+tc-db); // c1
 	
 	enqueue(a2); // a2
 	enqueue(b1+db); // b2
@@ -88,14 +92,16 @@ void compute_new_triples(void)
 
 int main(void)
 {
-    clock_t Ticks;
+    clock_t Ticks, TicksDelta;
     unsigned int Sec;
     unsigned int Milli;
+	
+	head = tail = queue;
     
     enqueue(3);
     enqueue(4);
     enqueue(5);
-    count = 0;
+
     printf("Press enter to start\n");
     getchar();
     printf("\nComputing...\n");
@@ -107,10 +113,10 @@ int main(void)
 		compute_new_triples();
     }
 
-    Ticks = clock() - Ticks;
-    Sec = (unsigned) (Ticks / CLOCKS_PER_SEC);
-    Milli = ((Ticks % CLOCKS_PER_SEC) * 1000) / CLOCKS_PER_SEC;
-    printf ("Time used: %u.%03u seconds\n", Sec, Milli);    
+    TicksDelta = clock() - Ticks;
+    Sec = (unsigned short) (TicksDelta / CLOCKS_PER_SEC);
+    Milli = ((TicksDelta % CLOCKS_PER_SEC) * 1000) / CLOCKS_PER_SEC;
+    printf ("Time used: %u.%03u seconds = %u ticks\n", Sec, Milli, (unsigned short) TicksDelta);    
     
     printf("Press enter to print the triples\n");
     getchar();

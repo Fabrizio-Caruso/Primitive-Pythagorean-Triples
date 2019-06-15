@@ -15,13 +15,12 @@ else
 COMPILEDEXT = .out
 endif
 
-
 c64_short:
-	cl65$(EXEEXT) -t c64 -DUSE_SHORT -DTARGET=1000 -DDISPLAY_START=981 -Oisr -Cl PPT_short.c -o PPT_short.prg
+	cl65$(EXEEXT) -t c64 -DEXTERN_VARS -DUSE_SHORT -DTARGET=1000 -DDISPLAY_START=981 -Oisr -Cl PPT_short.c extern_c64_short_vars.s -o PPT_short.prg
 	rm PPT_short.o
-	
+
 c64_long:
-	cl65$(EXEEXT) -t c64 -DTARGET=1000 -DDISPLAY_START=981  -Oisr -Cl PPT.c -o PPT_long.prg
+	cl65$(EXEEXT) -t c64 -DEXTERN_VARS -DTARGET=1000 -DDISPLAY_START=981  -Oisr -Cl PPT.c extern_c64_long_vars.s -o PPT_long.prg
 	rm PPT.o
 	
 pc_short:
