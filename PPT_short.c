@@ -3,20 +3,20 @@
 
 #define MAX_QUEUE 0x0FFF
 #if !defined(TARGET)
-#define TARGET 1000
+	#define TARGET 1000
 #endif
 
 #define MAX_QUEUE 0x0FFF
 #if !defined(DISPLAY_START)
-#define DISPLAY_START 981
+	#define DISPLAY_START 981
 #endif
 
 #if defined(USE_SHORT)
-typedef unsigned short number_t;
-#define DISPLAY_STRING "%u: %u %u %u\n"
+	typedef unsigned short number_t;
+	#define DISPLAY_STRING "%u: %u %u %u\n"
 #else
-typedef unsigned long number_t; 
-#define DISPLAY_STRING "%u: %lu %lu %lu\n"
+	typedef unsigned long number_t; 
+	#define DISPLAY_STRING "%u: %lu %lu %lu\n"
 #endif
 
 number_t queue[MAX_QUEUE];

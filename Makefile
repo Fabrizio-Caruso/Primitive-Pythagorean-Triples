@@ -15,12 +15,29 @@ else
 COMPILEDEXT = .out
 endif
 
+c64_3k_long:
+	cl65$(EXEEXT) -t c64 -O --codesize 800 -Cl -DEXTERN_VARS -DTARGET=3000 -DDISPLAY_START=2981 PPT.c extern_c64_long_vars.s -o PPT_3k_long.prg
+	rm extern_c64_long_vars.o
+	rm PPT.o
+
+c64_2k5_long:
+	cl65$(EXEEXT) -t c64 -O --codesize 800 -Cl -DEXTERN_VARS -DTARGET=2500 -DDISPLAY_START=2481 PPT.c extern_c64_long_vars.s -o PPT_2k5_long.prg
+	rm extern_c64_long_vars.o
+	rm PPT.o
+
+c64_2k_long:
+	cl65$(EXEEXT) -t c64 -O --codesize 800 -Cl -DEXTERN_VARS -DTARGET=2000 -DDISPLAY_START=1981 PPT.c extern_c64_long_vars.s -o PPT_2k_long.prg
+	rm extern_c64_long_vars.o
+	rm PPT.o
+
 c64_short:
-	cl65$(EXEEXT) -t c64 -DEXTERN_VARS -DUSE_SHORT -DTARGET=1000 -DDISPLAY_START=981 -Oisr -Cl PPT_short.c extern_c64_short_vars.s -o PPT_short.prg
+	cl65$(EXEEXT) -t c64 -O --codesize 800 -Cl -DEXTERN_VARS -DUSE_SHORT -DTARGET=1000 -DDISPLAY_START=981 PPT_short.c extern_c64_short_vars.s -o PPT_short.prg
+	rm extern_c64_short_vars.o
 	rm PPT_short.o
 
 c64_long:
-	cl65$(EXEEXT) -t c64 -DEXTERN_VARS -DTARGET=1000 -DDISPLAY_START=981  -Oisr -Cl PPT.c extern_c64_long_vars.s -o PPT_long.prg
+	cl65$(EXEEXT) -t c64 -O --codesize 800 -Cl -DEXTERN_VARS -DTARGET=1000 -DDISPLAY_START=981 PPT.c extern_c64_long_vars.s -o PPT_long.prg
+	rm extern_c64_long_vars.o
 	rm PPT.o
 	
 pc_short:
