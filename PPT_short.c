@@ -1,12 +1,10 @@
 #include <stdio.h>
 #include <time.h>
 
-#define MAX_QUEUE 0x0FFF
 #if !defined(TARGET)
 	#define TARGET 1000
 #endif
 
-#define MAX_QUEUE 0x0FFF
 #if !defined(DISPLAY_START)
 	#define DISPLAY_START 981
 #endif
@@ -18,6 +16,12 @@
 	typedef unsigned long number_t; 
 	#define DISPLAY_STRING "%u: %lu %lu %lu\n"
 #endif
+
+#define SIZE_T sizeof(number_t)
+#define TRIPLES_PER_LOOP 3
+#define CEILING(x,y) (((x) + (y) - 1) / (y))
+#define LOOPS CEILING((TARGET)-1,(TRIPLES_PER_LOOP))
+#define MAX_QUEUE (3*(1+(LOOPS)*(TRIPLES_PER_LOOP)))
 
 number_t queue[MAX_QUEUE];
 

@@ -18,11 +18,10 @@
 	#define DISPLAY_STRING "%u: %lu %lu %lu\n"
 #endif
 #define SIZE_T sizeof(number_t)
-#define MAX_QUEUE (TARGET*SIZE_T) 
-
-
+#define TRIPLES_PER_LOOP 3
 #define CEILING(x,y) (((x) + (y) - 1) / (y))
-#define LOOPS CEILING(TARGET-1,3)
+#define LOOPS CEILING((TARGET)-1,(TRIPLES_PER_LOOP))
+#define MAX_QUEUE (3*(1+(LOOPS)*(TRIPLES_PER_LOOP)))
 
 number_t queue[MAX_QUEUE];
 
@@ -39,8 +38,6 @@ number_t queue[MAX_QUEUE];
 	number_t da, db, dc, tc;
 	number_t s;	
 #endif
-
-
 
 #define enqueue(item) \
 	*(tail++) = (number_t)(item)
@@ -98,13 +95,18 @@ int main(void)
     unsigned int Sec;
     unsigned int Milli;
 	
-	head = tail = queue;
-    
+    head = tail = queue;
+
+	printf("\nTarget: %u\n", TARGET);
+	printf("\nDigit size (bytes): %u\n", SIZE_T);
+	printf("\nQueue length: %u\n", MAX_QUEUE);
+	printf("\nLoops: %u\n", LOOPS);
+	
     enqueue(3);
     enqueue(4);
     enqueue(5);
 
-    printf("Press enter to start\n");
+    printf("\nPress enter to start\n");
     getchar();
     printf("\nComputing...\n");
     

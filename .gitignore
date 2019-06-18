@@ -5,4 +5,7 @@
 *.EXE
 *.OUT
 *.PRG
+*.tap
+*.TAP
+zcc_opt.def
 
