@@ -15,11 +15,8 @@ else
 COMPILEDEXT = .out
 endif
 
-c64_3k_long:
-	cl65$(EXEEXT) -t c64 -O --codesize 800 -Cl -DEXTERN_VARS -DTARGET=3000 -DDISPLAY_START=2981 PPT.c extern_c64_long_vars.s -o PPT_3k_long.prg
-	rm extern_c64_long_vars.o
-	rm PPT.o
 
+# More than 1000 triples
 c64_2k5_long:
 	cl65$(EXEEXT) -t c64 -O --codesize 800 -Cl -DEXTERN_VARS -DTARGET=2500 -DDISPLAY_START=2481 PPT.c extern_c64_long_vars.s -o PPT_2k5_long.prg
 	rm extern_c64_long_vars.o
@@ -30,11 +27,10 @@ c64_2k_long:
 	rm extern_c64_long_vars.o
 	rm PPT.o
 
-c64_opt_short:
-	cl65$(EXEEXT) -t c64 -O --codesize 800 -Cl -DEXTERN_VARS -DUSE_SHORT -DTARGET=1000 -DDISPLAY_START=981 PPT_short.c extern_c64_short_vars.s -o PPT_opt_short.prg
-	rm PPT_short.o
-	rm extern_c64_short_vars.o
+# Compute up to 1000 with short digits (a few wrong triples when short is 16-bit)
 
+## Sinclair ZX targets
+	
 zx_opt_short:
 	zcc$(EXEEXT) +zx -O3 -DUSE_SHORT -DTARGET=1000 -DDISPLAY_START=981 PPT_short.c -lndos -create-app 
 	mv a.tap PPT_opt_short_zx.tap
@@ -63,15 +59,26 @@ all_zx_short: zx_short zx_opt_short
 
 all_zx_short_sdcc: zx_short_sdcc zx_opt_short_sdcc
 	
+	
+## C64 targets	
 c64_short:
-	cl65$(EXEEXT) -t c64 -O --codesize 800 -Cl -DUSE_SHORT -DTARGET=1000 -DDISPLAY_START=981 PPT.c -o PPT_short.prg
+	cl65$(EXEEXT) -t c64 -O --codesize 800 -Cl -DEXTERN_VARS -DUSE_SHORT -DTARGET=1000 -DDISPLAY_START=981 PPT.c extern_c64_long_vars.s -o PPT_short.prg
+	rm extern_c64_long_vars.o
 	rm PPT.o
+
+c64_opt_short:
+	cl65$(EXEEXT) -t c64 -O --codesize 800 -Cl -DEXTERN_VARS -DUSE_SHORT -DTARGET=1000 -DDISPLAY_START=981 PPT_short.c extern_c64_short_vars.s -o PPT_opt_short.prg
+	rm PPT_short.o
+	rm extern_c64_short_vars.o
 	
 c64_long:
 	cl65$(EXEEXT) -t c64 -O --codesize 800 -Cl -DEXTERN_VARS -DTARGET=1000 -DDISPLAY_START=981 PPT.c extern_c64_long_vars.s -o PPT_long.prg
 	rm extern_c64_long_vars.o
 	rm PPT.o
+
+all_c64: c64_short c64_long c64_opt_short
 	
+## PC targets
 pc_opt_short:
 	gcc -DUSE_SHORT -DTARGET=1000 -DDISPLAY_START=981 PPT_short.c -o PPT_opt_short$(COMPILEDEXT)
 	
@@ -79,6 +86,7 @@ pc_long:
 	gcc -DTARGET=1000 -DDISPLAY_START=981 PPT.c -o PPT_long$(COMPILEDEXT)
 	
 	
+# 	
 all: c64_short c64_long pc_short pc_long
 	
 clean:

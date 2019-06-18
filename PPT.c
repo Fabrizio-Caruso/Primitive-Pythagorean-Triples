@@ -32,6 +32,10 @@ number_t queue[MAX_QUEUE];
 	number_t *tail;
 	number_t *head;
 
+	#if defined(USE_MORE_VARIABLES)
+		number_t c1;
+		number_t a3,b3,c3;
+	#endif
 	number_t a,b,c;
 	number_t a1,b1;
 	number_t a2;
@@ -70,22 +74,36 @@ void compute_new_triples(void)
 	dc = c<<1;
 	tc = dc+c;
 	s = db+tc;
-
+	
 	a1 = a-db+dc; 
-	a2 = a1 + (db<<1);	
-	b1 = da-b+dc; 
 	
-	enqueue(a1); // a1
-	enqueue(b1); // b1
-	enqueue(da+tc-db); // c1
-	
-	enqueue(a2); // a2
-	enqueue(b1+db); // b2
-	enqueue(da+s); // c2
-	
-	enqueue(a2-da); // a3
-	enqueue((dc<<1)-b1); // b3
-	enqueue(s-da); // c3	
+	#if defined(USE_MORE_VARIABLES)
+		a2 = a+db+dc;
+		a3 = a2-da;
+		b1 = da+dc-b; 
+		b3 = (dc<<1)-b1;
+		c1 = da+tc-db;
+		c3 = s-da;
+
+		enqueue(a1); enqueue(b1); enqueue(c1);
+		enqueue(a2); enqueue(b1+db); enqueue(da+s);
+		enqueue(a3); enqueue(b3); enqueue(c3);
+	#else
+		a2 = a1 + (db<<1);	
+		b1 = da+dc-b; 
+		
+		enqueue(a1); // a1
+		enqueue(b1); // b1
+		enqueue(da+tc-db); // c1
+		
+		enqueue(a2); // a2
+		enqueue(b1+db); // b2
+		enqueue(da+s); // c2
+		
+		enqueue(a2-da); // a3
+		enqueue((dc<<1)-b1); // b3
+		enqueue(s-da); // c3	
+	#endif
 }
 
 
