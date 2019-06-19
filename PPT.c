@@ -26,23 +26,22 @@
 number_t queue[MAX_QUEUE];
 
 #if defined(EXTERN_VARS)
-	#include "extern_long_vars.h"
+	#include "extern_vars.h"	
 #else
 	unsigned short count = 0;
 	number_t *tail;
 	number_t *head;
-
-	#if defined(USE_MORE_VARIABLES)
-		number_t c1;
-		number_t a3,b3,c3;
-	#endif
 	number_t a,b,c;
 	number_t a1,b1;
 	number_t a2;
 	number_t da, db, dc, tc;
 	number_t s;	
 #endif
-
+#if defined(USE_MORE_VARIABLES)
+	number_t c1;
+	number_t a3,b3,c3;
+#endif
+	
 #define enqueue(item) \
 	*(tail++) = (number_t)(item)
 
