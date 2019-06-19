@@ -55,6 +55,10 @@ c64_short:
 	rm extern_c64_vars.o
 	rm PPT.o
 
+c64_short_no_extern:
+	cl65$(EXEEXT) -t c64 -O --codesize 800 -Cl -DUSE_SHORT -DTARGET=1000 -DDISPLAY_START=981 PPT.c -o PPT_short_no_extern.prg
+	rm PPT.o
+
 c64_more_vars_short:
 	cl65$(EXEEXT) -t c64 -O --codesize 800 -Cl -DEXTERN_VARS -DUSE_MORE_VARIABLES -DUSE_SHORT -DTARGET=1000 -DDISPLAY_START=981 PPT.c extern_c64_vars.s -o PPT_opt_short.prg
 	rm -rf PPT.o
