@@ -8,4 +8,4 @@
 *.tap
 *.TAP
 zcc_opt.def
-
+./build
