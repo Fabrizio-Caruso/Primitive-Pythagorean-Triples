@@ -88,10 +88,10 @@ all_c64: c64_short c64_long c64_short_more_vars c64_short_no_extern
 	
 ## PC targets
 pc_short:
-	gcc -DUSE_SHORT -DUSE_SHORT -DTARGET=65500 -DDISPLAY_START=65481 PPT.c -o PPT_short$(COMPILEDEXT)
+	gcc -DUSE_SHORT -DUSE_SHORT -DTARGET=65500 -DDISPLAY_START=65481 PPT.c -o $(BUILD_PATH)/PPT_short$(COMPILEDEXT)
 	
 pc_long:
-	gcc -DTARGET=65500 -DDISPLAY_START=65481 PPT.c -o PPT_long$(COMPILEDEXT)
+	gcc -DTARGET=65500 -DDISPLAY_START=65481 PPT.c -o $(BUILD_PATH)/PPT_long$(COMPILEDEXT)
 	
 all_pc: pc_short pc_long
 
