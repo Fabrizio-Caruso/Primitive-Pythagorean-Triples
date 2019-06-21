@@ -70,8 +70,12 @@ c64_short:
 	rm PPT.o
 
 c64_short_no_extern:
-	cl65$(EXEEXT) -t c64 -O --codesize 800 -Cl -DUSE_SHORT -DTARGET=1000 -DDISPLAY_START=981 PPT.c -o $(BUILD_PATH)/PPT_short_no_extern.prg
+	cl65$(EXEEXT) -t c64 -Or --codesize 800 -Cl -DUSE_SHORT -DTARGET=1000 -DDISPLAY_START=981 PPT.c -o $(BUILD_PATH)/PPT_short_no_extern.prg
 	rm PPT.o
+	
+c64_short_no_extern_no_globals:
+	cl65$(EXEEXT) -t c64 -Or --codesize 800 -Cl -DUSE_SHORT -DTARGET=1000 -DDISPLAY_START=981 PPT_no_globals.c -o $(BUILD_PATH)/PPT_short_no_extern_no_globals.prg
+	rm PPT_no_globals.o	
 
 c64_short_more_vars:
 	cl65$(EXEEXT) -t c64 -O --codesize 800 -Cl -DEXTERN_VARS -DUSE_MORE_VARIABLES -DUSE_SHORT -DTARGET=1000 -DDISPLAY_START=981 PPT.c extern_c64_vars.s -o $(BUILD_PATH)/PPT_short_more_vars.prg
