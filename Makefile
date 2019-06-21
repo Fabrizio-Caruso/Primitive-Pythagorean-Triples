@@ -40,7 +40,7 @@ zx_short:
 	rm a_BANK_7.bin
 
 zx_short_sdcc:
-	zcc$(EXEEXT) +zx -startup=1 -compiler=sdcc -SO3 --max-allocs-per-node200000 -DUSE_SHORT -DTARGET=1000 -DDISPLAY_START=981 PPT.c -lndos -create-app
+	zcc$(EXEEXT) +zx -compiler=sdcc -SO3 --max-allocs-per-node200000 -DUSE_SHORT -DTARGET=1000 -DDISPLAY_START=981 PPT.c -lndos -create-app
 	mv a.tap $(BUILD_PATH)/PPT_short_zx_sdcc.tap	
 	rm a.bin
 	rm a_BANK_7.bin
@@ -52,7 +52,7 @@ zx_long:
 	rm a_BANK_7.bin
 
 zx_long_sdcc:
-	zcc$(EXEEXT) +zx -startup=1 -compiler=sdcc -SO3 --max-allocs-per-node200000 -DTARGET=1000 -DDISPLAY_START=981 PPT.c -lndos -create-app
+	zcc$(EXEEXT) +zx -compiler=sdcc -SO3 --max-allocs-per-node200000 -DTARGET=1000 -DDISPLAY_START=981 PPT.c -lndos -create-app
 	mv a.tap $(BUILD_PATH)/PPT_long_zx_sdcc.tap	
 	rm a.bin
 	rm a_BANK_7.bin	
