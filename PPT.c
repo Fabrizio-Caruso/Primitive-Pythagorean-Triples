@@ -112,7 +112,8 @@ int main(void)
     unsigned int Sec;
     unsigned int Milli;
 	
-    head = tail = queue;
+	head = queue;
+	tail = queue;
 
 	printf("\nTarget: %u\n", TARGET);
 	printf("\nDigit size (bytes): %u\n", SIZE_T);

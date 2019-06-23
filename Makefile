@@ -31,16 +31,27 @@ c64_2k_long:
 # Compute up to 1000 with short digits (a few wrong triples when short is 16-bit)
 
 ## Sinclair ZX targets
-	
+
+test_sccz80:
+	zcc$(EXEEXT) +zx test.c -lndos -create-app
+	mv a.tap $(BUILD_PATH)/test_sccz80.tap	
+	rm a.bin
+	rm a_BANK_7.bin	
+
+test_sdcc:
+	zcc$(EXEEXT) +zx --c-code-in-asm  -compiler=sdcc test.c  -lndos -create-app
+	mv a.tap $(BUILD_PATH)/test_sdcc.tap	
+	rm a.bin
+	rm a_BANK_7.bin	
 	
 zx_short:
-	zcc$(EXEEXT) +zx -O3 -DUSE_SHORT -DTARGET=1000 -DDISPLAY_START=981 PPT.c -lndos -create-app 
+	zcc$(EXEEXT) +zx -O3 -DUSE_SHORT -DTARGET=5 -DDISPLAY_START=1 PPT.c -lndos -create-app 
 	mv a.tap $(BUILD_PATH)/PPT_short_zx.tap
 	rm a.bin
 	rm a_BANK_7.bin
 
 zx_short_sdcc:
-	zcc$(EXEEXT) +zx -compiler=sdcc -SO3 --max-allocs-per-node200000 -DUSE_SHORT -DTARGET=1000 -DDISPLAY_START=981 PPT.c -lndos -create-app
+	zcc$(EXEEXT) +zx -compiler=sdcc -SO3 --max-allocs-per-node200000 -DUSE_SHORT -DTARGET=5 -DDISPLAY_START=1 PPT.c -lndos -create-app
 	mv a.tap $(BUILD_PATH)/PPT_short_zx_sdcc.tap	
 	rm a.bin
 	rm a_BANK_7.bin
@@ -73,9 +84,7 @@ c64_short_no_extern:
 	cl65$(EXEEXT) -t c64 -Or --codesize 800 -Cl -DUSE_SHORT -DTARGET=1000 -DDISPLAY_START=981 PPT.c -o $(BUILD_PATH)/PPT_short_no_extern.prg
 	rm PPT.o
 	
-c64_short_no_extern_no_globals:
-	cl65$(EXEEXT) -t c64 -Or --codesize 800 -Cl -DUSE_SHORT -DTARGET=1000 -DDISPLAY_START=981 PPT_no_globals.c -o $(BUILD_PATH)/PPT_short_no_extern_no_globals.prg
-	rm PPT_no_globals.o	
+
 
 c64_short_more_vars:
 	cl65$(EXEEXT) -t c64 -O --codesize 800 -Cl -DEXTERN_VARS -DUSE_MORE_VARIABLES -DUSE_SHORT -DTARGET=1000 -DDISPLAY_START=981 PPT.c extern_c64_vars.s -o $(BUILD_PATH)/PPT_short_more_vars.prg
