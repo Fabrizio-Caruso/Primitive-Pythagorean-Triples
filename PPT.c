@@ -38,8 +38,12 @@ number_t queue[MAX_QUEUE];
 	number_t s;	
 #endif
 #if defined(USE_MORE_VARIABLES)
-	number_t c1;
-	number_t a3,b3,c3;
+	#if defined(EXTERN_VARS)
+		#include "extern_extra_vars.h"
+	#else
+		number_t c1;
+		number_t a3,b3,c3;
+	#endif
 #endif
 	
 #define enqueue(item) \

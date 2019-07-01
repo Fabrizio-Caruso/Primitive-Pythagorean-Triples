@@ -39,7 +39,7 @@ test_sccz80:
 	rm a_BANK_7.bin	
 
 test_sdcc:
-	zcc$(EXEEXT) +zx --c-code-in-asm  -compiler=sdcc test.c  -lndos -create-app
+	zcc$(EXEEXT) +zx -v -compiler=sdcc test.c  -lndos -create-app
 	mv a.tap $(BUILD_PATH)/test_sdcc.tap	
 	rm a.bin
 	rm a_BANK_7.bin	
@@ -75,29 +75,28 @@ all_zx_sdcc: zx_short_sdcc zx_long_sdcc
 	
 	
 ## C64 targets	
-c64_short:
-	cl65$(EXEEXT) -t c64 -O --codesize 800 -Cl -DEXTERN_VARS -DUSE_SHORT -DTARGET=1000 -DDISPLAY_START=981 PPT.c extern_c64_vars.s -o $(BUILD_PATH)/PPT_short.prg
+c64_short_less_vars:
+	cl65$(EXEEXT) -t c64 -O --codesize 800 -Cl -DEXTERN_VARS -DUSE_SHORT -DTARGET=1000 -DDISPLAY_START=981 PPT.c extern_c64_vars.s -o $(BUILD_PATH)/PPT_short_less_vars.prg
 	rm extern_c64_vars.o
 	rm PPT.o
 
 c64_short_no_extern:
 	cl65$(EXEEXT) -t c64 -Or --codesize 800 -Cl -DUSE_SHORT -DTARGET=1000 -DDISPLAY_START=981 PPT.c -o $(BUILD_PATH)/PPT_short_no_extern.prg
 	rm PPT.o
-	
 
-
-c64_short_more_vars:
-	cl65$(EXEEXT) -t c64 -O --codesize 800 -Cl -DEXTERN_VARS -DUSE_MORE_VARIABLES -DUSE_SHORT -DTARGET=1000 -DDISPLAY_START=981 PPT.c extern_c64_vars.s -o $(BUILD_PATH)/PPT_short_more_vars.prg
+c64_short:
+	cl65$(EXEEXT) -t c64 -O --codesize 800 -Cl -DEXTERN_VARS -DUSE_MORE_VARIABLES -DUSE_SHORT -DTARGET=1000 -DDISPLAY_START=981 PPT.c extern_c64_extra_vars.s extern_c64_vars.s -o $(BUILD_PATH)/PPT_short_more_vars.prg
 	rm -rf PPT.o
 	rm -rf PPT_short.o
-	rm -rf extern_c64_short_vars.o
+	rm -rf extern_c64_vars.o
+	rm -rf extern_c64_extra_vars.o
 	
 c64_long:
 	cl65$(EXEEXT) -t c64 -O --codesize 800 -Cl -DEXTERN_VARS -DTARGET=1000 -DDISPLAY_START=981 PPT.c extern_c64_vars.s -o $(BUILD_PATH)/PPT_long.prg
 	rm extern_c64_vars.o
 	rm PPT.o
 
-all_c64: c64_short c64_long c64_short_more_vars c64_short_no_extern
+all_c64: c64_short c64_long c64_short_less_vars c64_short_no_extern
 	
 ## PC targets
 pc_short:
