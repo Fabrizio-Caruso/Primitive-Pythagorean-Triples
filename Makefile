@@ -45,13 +45,13 @@ test_sdcc:
 	rm a_BANK_7.bin	
 	
 zx_short:
-	zcc$(EXEEXT) +zx -O3 -DUSE_SHORT -DTARGET=5 -DDISPLAY_START=1 PPT.c -lndos -create-app 
+	zcc$(EXEEXT) +zx -O3 -DUSE_SHORT -DTARGET=1000 -DDISPLAY_START=981 PPT.c -lndos -create-app 
 	mv a.tap $(BUILD_PATH)/PPT_short_zx.tap
 	rm a.bin
 	rm a_BANK_7.bin
 
 zx_short_sdcc:
-	zcc$(EXEEXT) +zx -compiler=sdcc -SO3 --max-allocs-per-node200000 -DUSE_SHORT -DTARGET=5 -DDISPLAY_START=1 PPT.c -lndos -create-app
+	zcc$(EXEEXT) +zx -compiler=sdcc -SO3 --max-allocs-per-node200000 -DUSE_SHORT -DTARGET=1000 -DDISPLAY_START=981 PPT.c -lndos -create-app
 	mv a.tap $(BUILD_PATH)/PPT_short_zx_sdcc.tap	
 	rm a.bin
 	rm a_BANK_7.bin
