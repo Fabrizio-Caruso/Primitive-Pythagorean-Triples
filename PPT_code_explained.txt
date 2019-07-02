@@ -1,0 +1,59 @@
+Primitive Pythagorean Triples
+
+We use Barning's theorem to compute a sequence of primitive Pythagorean triples.
+
+At each iteration 3 new triples are written onto the output array.
+Given the input triple a,b,c we want to compute the triples a1,b1,c1; a2,b2,c2; a3,b3,c3.
+
+This is implement in ANSI C (no Assembly). The code is parametrized and can be compiled with any ANSI compiler for any system.
+There are 2 types of generic optimizations:
+
+I) The matrix multiplications are optimized by two main strategies.
+1. We precompute recurrent summands and factors:
+"
+	da = a<<1;
+	db = b<<1;
+	dc = c<<1;
+	tc = dc+c;
+	s = db+tc;
+"
+2. We use the linear relations between the components of the new triples:
+Example 1:
+We may use:
+"
+	a2 = a1 + (db<<1);	
+"
+instead of:
+"
+	a2 = a+db+dc;
+"
+because we have: a1 = a+dc-db; 
+
+Example 2:
+We use the fact that b2=b1+db.
+
+II) The array read and write operations are optimized by using two pointers (head and tail) instead of indeces.
+This is much faster because an index produces poorer code in which the binary will have to compute the offset by a 16-bit sum.
+
+
+For the 6502 targets we use two additional specific optimizations:
+A) We tell CC65 to store all global variables into zeropage.
+This is achieved through the use of:
+- pragma directives (see extern_vars.h) 
+- extern variables  (see extern_vars.h)
+- a .s file that maps variables names to zeropage locations (see extern_c64_vars.s)
+
+B) A hack to avoid CC65 from generating very sub-optimal code in some cases.
+This is sort of black magic because it depends on which peep-hole rules the poor CC65's optimizer uses.
+In this case we have a general workaround of a little known problem in CC65:
+with 8 and 16-bit types, CC65 may generate much better code if we use additional variables before we store a value through a pointer.
+For example:
+If using unsigned short or int (not unsigned long), CC65 produces a better binary with
+"
+	c1 = da+tc-db;
+	*(tail++)=c1;
+"
+instead of
+"
+	*(tail++) = da+tc-db;
+"		

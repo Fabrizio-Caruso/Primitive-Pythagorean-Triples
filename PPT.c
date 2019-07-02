@@ -78,22 +78,20 @@ void compute_new_triples(void)
 	tc = dc+c;
 	s = db+tc;
 	
-	a1 = a-db+dc; 
+	a1 = a+dc-db; 
+	b1 = da+dc-b; 
 	
 	#if defined(USE_MORE_VARIABLES)
 		a2 = a+db+dc;
 		a3 = a2-da;
-		b1 = da+dc-b; 
 		b3 = (dc<<1)-b1;
 		c1 = da+tc-db;
 		c3 = s-da;
-
 		enqueue(a1); enqueue(b1); enqueue(c1);
 		enqueue(a2); enqueue(b1+db); enqueue(da+s);
 		enqueue(a3); enqueue(b3); enqueue(c3);
 	#else
 		a2 = a1 + (db<<1);	
-		b1 = da+dc-b; 
 		
 		enqueue(a1); // a1
 		enqueue(b1); // b1
