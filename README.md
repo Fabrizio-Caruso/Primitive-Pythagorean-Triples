@@ -12,10 +12,15 @@ The code can be built by any standard ANSI-compliant compiler such as GCC and CC
 
 ### Use the Makefile targets.
 For example: 
-- **make c64_short** to produce a C64 binary that uses 16 bit integers 
-- **make c64_long** to produce a C64 binary that uses 32 bit integers
-- **make pc_short** to produce a PC binary that uses unsigned short integers
-- **make pc_long** to produce a PC binary that uses unsigned long integers
+- **make c64_short** to build a C64 binary that uses 16 bit integers 
+- **make c64_long** to build a C64 binary that uses 32 bit integers
+- **make zx_short** to build a ZX Spectrum binary that uses 16 bit integers
+- **make zx_long** to build a ZX Spectrum binary that uses 32 bit integers
+- **make pc_short** to build a PC binary that uses unsigned short integers
+- **make pc_long** to build a PC binary that uses unsigned long integers
+- **make all_c64** to build all C64 binaries
+- **make all_zx** to build all ZX binaries
+- **make all_pc** to build all PC binaries
 - **make all** to produce all binary versions
 
 ### Use directly a compiler and pass the parameters to customize the computation and display
