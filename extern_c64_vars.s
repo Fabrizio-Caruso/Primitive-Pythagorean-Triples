@@ -1,46 +1,48 @@
-.export _count;
+.segment "ZEROPAGE"
+
+.exportzp _count;
 _count = $FA
 
-.export _head;
+.exportzp _head;
 _head = $50
 
-.export _tail;
+.exportzp _tail;
 _tail = $54
 
-.export _a;
+.exportzp _a;
 _a = $58
 
-.export _b;
+.exportzp _b;
 _b = $5C
 
-.export _c;
+.exportzp _c;
 _c = $60
 
 
 
 
-.export _a1;
+.exportzp _a1;
 _a1 = $64
 
-.export _b1;
+.exportzp _b1;
 _b1 = $68
 
-.export _a2;
+.exportzp _a2;
 _a2 = $6C
 
-.export _da;
+.exportzp _da;
 _da = $70
 
-.export _db;
+.exportzp _db;
 _db = $74
 
-.export _dc;
+.exportzp _dc;
 _dc = $40
 
-.export _tc;
+.exportzp _tc;
 _tc = $44
 
-.export _s;
+.exportzp _s;
 _s = $FC
 
 

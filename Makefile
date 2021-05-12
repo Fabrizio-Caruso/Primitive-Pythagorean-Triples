@@ -19,18 +19,20 @@ BUILD_PATH ?= ./build
 
 # More than 1000 triples
 c64_2k5_long:
-	cl65$(EXEEXT) -t c64 -O --codesize 800 -Cl -DEXTERN_VARS -DTARGET=2500 -DDISPLAY_START=2481 PPT.c extern_c64_vars.s -o $(BUILD_PATH)/PPT_2k5_long.prg
+	cl65$(EXEEXT) -t c64 -O $(CODE_SIZE_OPT) -Cl -DEXTERN_VARS -DTARGET=2500 -DDISPLAY_START=2481 PPT.c extern_c64_vars.s -o $(BUILD_PATH)/PPT_2k5_long.prg
 	rm extern_c64_vars.o
 	rm PPT.o
 
 c64_2k_long:
-	cl65$(EXEEXT) -t c64 -O --codesize 800 -Cl -DEXTERN_VARS -DTARGET=2000 -DDISPLAY_START=1981 PPT.c extern_c64_vars.s -o $(BUILD_PATH)/PPT_2k_long.prg
+	cl65$(EXEEXT) -t c64 -O $(CODE_SIZE_OPT) -Cl -DEXTERN_VARS -DTARGET=2000 -DDISPLAY_START=1981 PPT.c extern_c64_vars.s -o $(BUILD_PATH)/PPT_2k_long.prg
 	rm extern_c64_vars.o
 	rm PPT.o
 
 # Compute up to 1000 with short digits (a few wrong triples when short is 16-bit)
 
 ## Sinclair ZX targets
+
+CODE_SIZE_OPT=--codesize 800
 
 test_sccz80:
 	zcc$(EXEEXT) +zx test.c -lndos -create-app
@@ -72,27 +74,37 @@ all_zx: zx_short zx_long
 
 all_zx_sdcc: zx_short_sdcc zx_long_sdcc
 
-	
+## VBCC C64 targets	
+
+vbcc_c64_triples: vbcc_c64_short
+
+vbcc_c64_short:
+	vc$(EXEEXT) +c64 -O4  -DUSE_SHORT -DTARGET=1000 -DDISPLAY_START=981 PPT.c -o $(BUILD_PATH)/vbcc_c64_PPT_short.prg
 	
 ## C64 targets	
+
+cc65_c64_triples: c64_short_no_extern
+
 c64_short_less_vars:
-	cl65$(EXEEXT) -t c64 -O --codesize 800 -Cl -DEXTERN_VARS -DUSE_SHORT -DTARGET=1000 -DDISPLAY_START=981 PPT.c extern_c64_vars.s -o $(BUILD_PATH)/PPT_short_less_vars.prg
+	cl65$(EXEEXT) -t c64 -O $(CODE_SIZE_OPT) -Cl -DEXTERN_VARS -DUSE_SHORT -DTARGET=1000 -DDISPLAY_START=981 PPT.c extern_c64_vars.s -o $(BUILD_PATH)/PPT_short_less_vars.prg
 	rm -rf extern_c64_vars.o
 	rm -rf PPT.o
 
 c64_short_no_extern:
-	cl65$(EXEEXT) -t c64 -Or --codesize 800 -Cl -DUSE_SHORT -DTARGET=1000 -DDISPLAY_START=981 PPT.c -o $(BUILD_PATH)/PPT_short_no_extern.prg
+	cl65$(EXEEXT) -t c64 -Or $(CODE_SIZE_OPT) -Cl -DUSE_SHORT -DTARGET=1000 -DDISPLAY_START=981 PPT.c -o $(BUILD_PATH)/PPT_short_no_extern.prg
 	rm -rf PPT.o
 
+
+
 c64_short:
-	cl65$(EXEEXT) -t c64 -O --codesize 800 -Cl -DEXTERN_VARS -DUSE_MORE_VARIABLES -DUSE_SHORT -DTARGET=1000 -DDISPLAY_START=981 PPT.c extern_c64_extra_vars.s extern_c64_vars.s -o $(BUILD_PATH)/PPT_short.prg
+	cl65$(EXEEXT) -t c64 -O $(CODE_SIZE_OPT) -Cl -DEXTERN_VARS -DUSE_MORE_VARIABLES -DUSE_SHORT -DTARGET=1000 -DDISPLAY_START=981 PPT.c extern_c64_extra_vars.s extern_c64_vars.s -o $(BUILD_PATH)/cc65_c64_PPT_short.prg
 	rm -rf PPT.o
 	rm -rf PPT_short.o
 	rm -rf extern_c64_vars.o
 	rm -rf extern_c64_extra_vars.o
 	
 c64_long:
-	cl65$(EXEEXT) -t c64 -O --codesize 800 -Cl -DEXTERN_VARS -DTARGET=1000 -DDISPLAY_START=981 PPT.c extern_c64_vars.s -o $(BUILD_PATH)/PPT_long.prg
+	cl65$(EXEEXT) -t c64 -O $(CODE_SIZE_OPT) -Cl -DEXTERN_VARS -DTARGET=1000 -DDISPLAY_START=981 PPT.c extern_c64_vars.s -o $(BUILD_PATH)/PPT_long.prg
 	rm -rf extern_c64_vars.o
 	rm -rf PPT.o
 
